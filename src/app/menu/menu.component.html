@@ -1,0 +1,38 @@
+<nav class="mx-6 md:max-w-6xl md:mx-auto pt-6 pb-4 px-3 md:pb-0 border-b-2 flex gap-4 text-neutral-950">
+    <div class="flex-grow flex items-center md:items-start gap-8 md:gap-0">
+        <svg (click)="toggleMenu()" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 cursor-pointer block md:hidden hover:border-2 hover:border-orange-400 hover:rounded-md">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>    
+        <a class="mr-12 font-bold text-3xl"> sneakers </a>
+        <ul class="gap-6 h-16 mt-2 text-neutral-500 hidden md:flex" >
+            <ng-container *ngTemplateOutlet="menuItemsList, context: {$implicit: 'desktop'}"></ng-container>
+        </ul>  
+    </div>
+    
+    <div class="flex-end h-full flex gap-8 items-center md:items-start">
+        <div class="md:mt-2 md:relative px-3 md:px-0">
+            <app-cart></app-cart>
+        </div>
+        <div class="w-16 pl-4">
+            <img class="rounded-full hover:border-2 hover:border-orange-400" src="assets/images/image-avatar.png">  
+        </div>
+    </div>
+
+    <div [hidden]="!isOpen" class="absolute top-0 left-0 opacity-50 w-full h-full bg-black-900 z-20 md:hidden"></div>
+    <div [ngClass]="isOpen ? 'translate-x-0 z-20' : '-translate-x-64'" class="absolute w-64 left-0 top-0 bg-white h-full md:hidden transition ease-in-out duration-200">
+        <div class="flex w-full px-5 mt-6 font-bold">
+            <svg (click)="toggleMenu()" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer hover:border-2 hover:border-orange-400 hover:rounded-md">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg> 
+        </div>
+        <ul class="mt-8 px-5 flex flex-col gap-4 font-bold">
+            <ng-container *ngTemplateOutlet="menuItemsList; context: {$implicit: 'mobile'}"></ng-container>
+        </ul>  
+    </div>
+</nav>
+
+<ng-template #menuItemsList let-display>
+    @for (item of menuItems; track item) {
+        <li [ngClass]="display === 'mobile' ? '' : 'border-b-2 box-content h-16 hover:border-orange-400 px-2 hover:text-neutral-950'"><a class="cursor-pointer">{{ item }}</a></li>
+    }
+</ng-template>
